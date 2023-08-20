@@ -1,4 +1,5 @@
-local _, core = ...
+GPBGlobalTableL = GPBGlobalTableL or {}
+local core = GPBGlobalTableL
 
 local setmetatable, rawset, format = setmetatable, rawset, string.format
 local L = setmetatable({}, {
@@ -13,9 +14,10 @@ function L:F(line, ...)
 	line = L[line]
 	return format(line, ...)
 end
-core.L = L
 
+core.L = L
 local GAME_LOCALE = GetLocale()
+
 
 -- default (enUS/enGB)
 L["Eanbled"] = true

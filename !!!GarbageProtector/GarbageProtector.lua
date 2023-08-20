@@ -1,6 +1,14 @@
-local folder, core = ...
+local folder = "GarbageProtector"
+local core = GPBGlobalTableL
 local L = core.L
+
+local _G = client == 11200 and getfenv(0) or _G
+
 _G.GarbageProtector = core
+
+local _, _, _, client = GetBuildInfo()
+
+client = client or 11200
 
 --default values for options saved between sessions
 local defaults = {Enabled = true, Handlecollectgarbage = true, HandleUpdateAddOnMemoryUsage = true}
@@ -10,6 +18,7 @@ local function Print(msg)
 		print("|cff33ff99" .. folder .. "|r", msg)
 	end
 end
+
 --function to initialize missing saved variables with default values
 local function InitializeGarbageProtectorDB(tbl)
 	GarbageProtectorDB = GarbageProtectorDB or {}
@@ -171,7 +180,11 @@ SlashCmdList["GarbageProtector"] = function(msg)
 			ToggleHandleUpdateAddOnMemoryUsage(nil, true)
 		end
 	elseif (param1 == "") then
-		InterfaceOptionsFrame_OpenToCategory(optionsMenu)
+		if client > 20400 then
+			InterfaceOptionsFrame_OpenToCategory(optionsMenu)
+		else
+			InterfaceOptionsFrame_OpenToFrame(optionsMenu)
+		end
 	else
 		Print(L["Acceptable commands:"])
 		print("|caaf49141/gp|r", L["open the options interface"])
